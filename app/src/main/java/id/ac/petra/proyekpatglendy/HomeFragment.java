@@ -1,6 +1,5 @@
 package id.ac.petra.proyekpatglendy;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -55,7 +54,7 @@ public class HomeFragment extends Fragment {
 
     private void getLocation() {
         executor = Executors.newSingleThreadExecutor();
-        handler = new Handler(Looper.getMainLooper());//row114
+        handler = new Handler(Looper.getMainLooper());
         executor.execute(() -> {
             List<DataModel> result = null;
             try {
@@ -71,12 +70,12 @@ public class HomeFragment extends Fragment {
                     cAdapter = new CustomAdapter(getActivity(),finalResult);
                     mylv.setAdapter(cAdapter);
                     mylv.setClickable(true);
-//                    mylv.setOnClickListener((adapterView, view1, i, l) -> {
-//                        Intent intent = new Intent(getContext(), UserFragment.class);
-//                        intent.putExtra("LocId", finalResult.get(i).getId());
-//                        intent.putExtra("Location",finalResult.get(i).getLoc());
-//                        startActivity(intent);
-//                    });
+                    /*mylv.setOnClickListener((adapterView, view1, i, l) -> {
+                        Intent intent = new Intent(getContext(), UserFragment.class);
+                        intent.putExtra("LocId", finalResult.get(i).getId());
+                        intent.putExtra("Location",finalResult.get(i).getLoc());
+                        startActivity(intent);
+                    });*/
                 }
             });
         });
@@ -101,11 +100,15 @@ public class HomeFragment extends Fragment {
 
         JSONArray myArray = new JSONArray(response.toString());
         List<DataModel> result = new ArrayList<>();
+        System.out.println("View: " +result);
         for (int i = 0; i < myArray.length(); i++) {
             JSONObject arrObj = myArray.getJSONObject(i);
             DataModel u = new DataModel();
+            System.out.println("View2: " +u);
+            System.out.println("View3: " +i);
             u.setId(arrObj.getInt("id"));
-            u.setLoc(arrObj.getString("location"));
+            u.setCity(arrObj.getString("city"));
+            u.setStreet(arrObj.getString("street"));
             result.add(u);
         }
         return result;

@@ -2,26 +2,36 @@ package id.ac.petra.proyekpatglendy;
 
 public class DataModel {
     int id;
-    String loc;
+    String city;
+    String street;
 
     public DataModel() {
         this.id = id;
-        this.loc = loc;
+        this.city = city;
+        this.street = street;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
-    public String getLoc(){
-        return loc;
-    }
-
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setLoc(String loc){
-        this.loc = loc;
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }
