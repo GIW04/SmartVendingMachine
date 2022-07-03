@@ -49,7 +49,7 @@ public class BasketFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requireActivity().setTitle("Shopping Cart");
+        requireActivity().setTitle("Transaction History");
     }
 
     @Override

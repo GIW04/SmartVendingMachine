@@ -15,6 +15,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
 public class login extends AppCompatActivity {
 
     GoogleSignInOptions gso;
@@ -70,6 +79,11 @@ public class login extends AppCompatActivity {
         if(requestCode == 1000) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
+                try {
+                    insertToDB();
+                } catch (Exception except){
+                    Toast.makeText(getApplicationContext(),"User can not added to SQL",Toast.LENGTH_SHORT).show();
+                }
                 task.getResult(ApiException.class);
                 navigateToSecondActivity();
             } catch (ApiException e) {
@@ -82,5 +96,39 @@ public class login extends AppCompatActivity {
         finish();
         Intent intent = new Intent(login.this,home.class);
         startActivity(intent);
+    }
+
+    void insertToDB() throws Exception {
+        String url = "http://192.168.1.7:7000/user";
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("POST");
+        con.setRequestProperty("User-Agent","Mozilla/5.0");
+        con.setRequestProperty("Content-Type","application/json");
+        con.setRequestProperty("Accept","application/json");
+        con.setDoOutput(true);
+        con.setDoInput(true);
+        con.connect();
+        JSONObject jsonParam = new JSONObject();
+        GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(this);
+        String Name = gsa.getDisplayName();
+        String ID = gsa.getId();
+        String Email = gsa.getEmail();
+        jsonParam.put("email",Email);
+        byte[]jsData = jsonParam.toString().getBytes(StandardCharsets.UTF_8);
+        OutputStream os = con.getOutputStream();
+        System.out.println("Debug" +String.valueOf(jsonParam));
+        os.write(jsData);
+        int responseCode = con.getResponseCode();
+        System.out.println("Send Get Request to: " +url);
+        System.out.println("Response Code: " +responseCode);
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String input;
+        StringBuffer response = new StringBuffer();
+        while ((input = in.readLine()) != null) {
+            response.append(input);
+        }
+        in.close();
+        System.out.println("Data: " +response.toString());
     }
 }

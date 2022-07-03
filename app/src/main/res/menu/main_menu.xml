@@ -7,7 +7,7 @@
 
     <item
         android:id="@+id/basket"
-        android:title="Basket"
+        android:title="Transaction"
         android:icon="@drawable/ic_baseline_local_grocery_store_24"/>
 
     <item

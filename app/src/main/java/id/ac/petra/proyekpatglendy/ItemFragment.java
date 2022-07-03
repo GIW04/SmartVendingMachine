@@ -27,31 +27,31 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class HomeFragment extends Fragment {
-    ListView mylv;
-    SwipeRefreshLayout refresh;
-    CustomAdapter cAdapter;
+public class ItemFragment extends Fragment {
+    ListView mylv2;
+    SwipeRefreshLayout refresh2;
+    CustomAdapter2 cAdapter2;
     ExecutorService executor;
     Handler handler;
 
-    public HomeFragment() {
+    public ItemFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        requireActivity().setTitle("Vending Machine Locations");
+        requireActivity().setTitle("Item List");
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        mylv = (ListView) view.findViewById(R.id.lv1);
-        getLocation();
-        refresh = view.findViewById(R.id.swipe_refresh);
-        refresh.setOnRefreshListener(this::getLocation);
+        View view = inflater.inflate(R.layout.fragment_item,container,false);
+        mylv2 = (ListView) view.findViewById(R.id.lv2);
+        getItem();
+        refresh2 = view.findViewById(R.id.swipe_refresh2);
+        refresh2.setOnRefreshListener(this::getItem);
         return view;
     }
 
@@ -60,62 +60,62 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void getLocation() {
+    private void getItem() {
         executor = Executors.newSingleThreadExecutor();
         handler = new Handler(Looper.getMainLooper());
-        executor.execute(() -> {
-            List<DataModel> result = null;
+        executor.execute(()->{
+            List<DataModel2> results = null;
             try {
-                result = getREST();
-                refresh.setRefreshing(false);
+                results = getREST();
+                refresh2.setRefreshing(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            List<DataModel> finalResult = result;
-            handler.post(() -> {
-                if (getActivity() != null && finalResult != null) {
-                    cAdapter = new CustomAdapter(getActivity(),finalResult);
-                    mylv.setAdapter(cAdapter);
-                    mylv.setClickable(true);
-                    mylv.setOnItemClickListener((adapterView, view1, x, l) -> {
-                        Intent intent = new Intent(getContext(), ItemFragment.class);
-                        intent.putExtra("LocId", finalResult.get(x).getId());
-                        intent.putExtra("Street",finalResult.get(x).getStreet());
-                        startActivity(intent);
-                    });
+            List<DataModel2> finalsResult = results;
+            handler.post(()->{
+               if(getActivity() != null && finalsResult != null) {
+                   cAdapter2 = new CustomAdapter2(getActivity(),finalsResult);
+                   mylv2.setAdapter(cAdapter2);
+                   mylv2.setClickable(true);
+                   mylv2.setOnItemClickListener((adapterView, view, i, l) -> {
+                       Intent intent = new Intent(getContext(),login.class);
+                       intent.putExtra("ItemId", finalsResult.get(i).getId());
+                       intent.putExtra("Name", finalsResult.get(i).getName());
+                       intent.putExtra("Price", finalsResult.get(i).getPrice());
+                       startActivity(intent);
+                   });
                 }
             });
         });
     }
 
-    private List<DataModel> getREST() throws Exception {
-        String url = "http://192.168.1.7:7000/location";
+    private List<DataModel2> getREST() throws Exception {
+        String url = "http://192.168.1.7:7000/menu";
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
-        con.setRequestProperty("User-Agent","Mozilla/5.0");
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
         con.connect();
 
         int responseCode = con.getResponseCode();
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String input;
-        StringBuffer response = new StringBuffer();
+        StringBuffer responses = new StringBuffer();
         while ((input = in.readLine()) != null){
-            response.append(input);
+            responses.append(input);
         }
         in.close();
 
-        JSONArray myArray = new JSONArray(response.toString());
-        List<DataModel> result = new ArrayList<DataModel>();
-        for (int i = 0; i < myArray.length(); i++) {
+        JSONArray myArray = new JSONArray(responses.toString());
+        List<DataModel2> results = new ArrayList<DataModel2>();
+        for (int i = 0; i < myArray.length(); i++){
             JSONObject arrObj = myArray.getJSONObject(i);
-            DataModel u = new DataModel();
+            DataModel2 u = new DataModel2();
             u.setId(arrObj.getInt("id"));
-            u.setCity(arrObj.getString("city"));
-            u.setStreet(arrObj.getString("street"));
-            result.add(u);
+            u.setName(arrObj.getString("name"));
+            u.setPrice(arrObj.getString("price"));
         }
-        return result;
+        return results;
     }
 }

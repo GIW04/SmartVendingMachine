@@ -4,13 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment">
+    tools:context=".ItemFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/streetDisplay"
+        android:text="Location"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/streetName"
+        android:text="StreetName"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:padding="8dp"
+        app:layout_constraintStart_toEndOf="@+id/streetDisplay"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:id="@+id/swipe_refresh"
+        android:id="@+id/swipe_refresh2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,10 +39,11 @@
 
         <ListView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/lv1"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv2"
             android:divider="@color/design_default_color_primary_dark"
             android:dividerHeight="1dp"
             android:listSelector="#eae9e9"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

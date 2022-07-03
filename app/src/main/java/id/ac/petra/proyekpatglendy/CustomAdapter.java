@@ -5,19 +5,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Filter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CustomAdapter extends BaseAdapter {
+
+public class CustomAdapter extends ArrayAdapter<DataModel> {
+    private List<DataModel> ListFull;
+
+    public CustomAdapter(@NonNull Context context, @NonNull List<DataModel> LocationList){
+        super(context,0,LocationList);
+    }
+
+    @NonNull
+    @Override
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        if(convertView == null){
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_locations,parent,false);
+        }
+        TextView textViewLoc = convertView.findViewById(R.id.listview_location);
+        DataModel DataModel = getItem(position);
+        if(DataModel != null){
+            textViewLoc.setText(DataModel.getStreet());
+        }
+        return convertView;
+    }
+}
+/*public class CustomAdapter extends BaseAdapter {
     Context c;
     ArrayList<DataModel> id;
     ArrayList<DataModel> city;
@@ -54,4 +71,4 @@ public class CustomAdapter extends BaseAdapter {
         locate.setText((CharSequence) city);
         return view;
     }
-}
+}*/

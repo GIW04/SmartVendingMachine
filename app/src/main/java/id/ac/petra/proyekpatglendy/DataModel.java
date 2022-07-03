@@ -5,7 +5,13 @@ public class DataModel {
     String city;
     String street;
 
-    public DataModel() {
+    public DataModel(int id, String city, String street) {
+        this.id = id;
+        this.city = city;
+        this.street = street;
+    }
+
+    public DataModel(String city, int id, String street){
         this.id = id;
         this.city = city;
         this.street = street;
@@ -17,6 +23,10 @@ public class DataModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public DataModel(){
+
     }
 
     public String getCity() {

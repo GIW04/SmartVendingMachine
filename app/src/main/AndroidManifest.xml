@@ -2,17 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="id.ac.petra.proyekpatglendy">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ProyekPATGlendy">
+        android:theme="@style/Theme.ProyekPATGlendy"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ItemMenus"
+            android:exported="false" />
+        <activity
+            android:name=".BuyItem"
+            android:exported="false" />
         <activity
             android:name=".home"
             android:exported="false" />

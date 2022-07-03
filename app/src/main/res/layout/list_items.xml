@@ -3,12 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:id="@+id/listview_location"
+        android:id="@+id/listview_item"
         android:textColor="@color/black"
         android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:id="@+id/listview_price"
+        android:textColor="@color/black"
+        android:layout_gravity="center"/>
+
 </LinearLayout>
