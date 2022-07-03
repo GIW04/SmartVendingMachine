@@ -42,6 +42,7 @@ public class HomeFragment extends Fragment {
         setHasOptionsMenu(true);
         requireActivity().setTitle("Vending Machine Locations");
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -79,7 +80,7 @@ public class HomeFragment extends Fragment {
                     mylv.setAdapter(cAdapter);
                     mylv.setClickable(true);
                     mylv.setOnItemClickListener((adapterView, view1, x, l) -> {
-                        Intent intent = new Intent(getContext(), ItemFragment.class);
+                        Intent intent = new Intent(getContext(), ItemMenus.class);
                         intent.putExtra("LocId", finalResult.get(x).getId());
                         intent.putExtra("Street",finalResult.get(x).getStreet());
                         startActivity(intent);
